@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://0pgdxx4qai41"]
+
+[ext_resource type="Script" uid="uid://b6osbstt5ihf5" path="res://ui/Lobby.gd" id="1_wj4id"]
+
+[node name="Lobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wj4id")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 341.333
+offset_right = 682.666
+offset_bottom = 1024.0
+
+[node name="SessionCodeLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Session Code"
+uppercase = true
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "PlayerList"
+
+[node name="PlayerList" type="ItemList" parent="VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+auto_width = true
+auto_height = true
+
+[node name="StartButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Start Game"
+
+[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
