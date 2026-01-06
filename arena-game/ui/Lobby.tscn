@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://0pgdxx4qai41"]
+[gd_scene load_steps=3 format=3 uid="uid://0pgdxx4qai41"]
 
 [ext_resource type="Script" uid="uid://b6osbstt5ihf5" path="res://ui/Lobby.gd" id="1_wj4id"]
+[ext_resource type="FontFile" uid="uid://mdkgygnyjnl2" path="res://fonts/Paper Noise.otf" id="2_tqy5v"]
 
 [node name="Lobby" type="Control"]
 layout_mode = 3
@@ -19,21 +20,25 @@ offset_bottom = 1024.0
 
 [node name="SessionCodeLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_tqy5v")
 text = "Session Code"
 uppercase = true
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_tqy5v")
 text = "PlayerList"
 
 [node name="PlayerList" type="ItemList" parent="VBoxContainer"]
 layout_mode = 2
 focus_mode = 0
+theme_override_fonts/font = ExtResource("2_tqy5v")
 auto_width = true
 auto_height = true
 
 [node name="StartButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_tqy5v")
 text = "Start Game"
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cqv37uce5ommj"]
+[gd_scene load_steps=3 format=3 uid="uid://cqv37uce5ommj"]
 
 [ext_resource type="Script" uid="uid://cprn458gbuc31" path="res://ui/MainMenu.gd" id="1_b00nv"]
+[ext_resource type="FontFile" uid="uid://mdkgygnyjnl2" path="res://fonts/Paper Noise.otf" id="2_rn8js"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -24,6 +25,7 @@ placeholder_text = "Name..."
 
 [node name="HostButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_rn8js")
 text = "Host
 "
 
@@ -33,14 +35,17 @@ placeholder_text = "Code..."
 
 [node name="JoinButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_rn8js")
 text = "Join
 "
 
 [node name="ErrorLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_rn8js")
 
 [node name="CodeError" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_rn8js")
 
 [connection signal="pressed" from="VBoxContainer/HostButton" to="." method="_on_HostButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/JoinButton" to="." method="_on_JoinButton_pressed"]
