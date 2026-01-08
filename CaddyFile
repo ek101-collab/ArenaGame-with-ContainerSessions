@@ -8,15 +8,13 @@
     header {
         Cross-Origin-Opener-Policy same-origin
         Cross-Origin-Embedder-Policy require-corp
+    } 
+    handle_path /matchmaker/* {
+        reverse_proxy matchmaker:8001
     }
     route /game/* {
-    @port path_regexp port ^/game/([0-9]+)
-    
-    uri strip_prefix /game/{re.port.1}
-
-    reverse_proxy @port localhost:{re.port.1}
-}
-}
-46.101.127.20.sslip.io:8001 {
-    reverse_proxy matchmaker:8001
+        @port path_regexp port ^/game/([0-9]+)
+        uri strip_prefix /game/{re.port.1}
+        reverse_proxy @port localhost:{re.port.1}
+    }
 }

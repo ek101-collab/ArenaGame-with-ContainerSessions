@@ -13,11 +13,11 @@ var local_player_id = ""
 var session_code = ""
 
 func _ready():
+	MATCHMAKER_URL = "https://46.101.127.20.sslip.io/matchmaker"
+	
 	if OS.has_feature("web"):
-		MATCHMAKER_URL = "https://46.101.127.20.sslip.io:8001"
 		print("Browser-Modus: Matchmaker ist ", MATCHMAKER_URL)
 	else:
-		MATCHMAKER_URL = "https://46.101.127.20.sslip.io:8001"
 		print("Editor-Modus: Matchmaker ist ", MATCHMAKER_URL)
 
 func _process(_delta):
