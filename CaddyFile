@@ -1,0 +1,12 @@
+46.101.127.20.sslip.io {
+    root * /usr/share/caddy
+    file_server
+    header {
+        Cross-Origin-Opener-Policy same-origin
+        Cross-Origin-Embedder-Policy require-corp
+    }
+}
+
+46.101.127.20.sslip.io:8001 {
+    reverse_proxy matchmaker:8001
+}
