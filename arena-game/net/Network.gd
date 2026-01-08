@@ -96,7 +96,7 @@ func _connect_ws(ip: String, port: String):
 		else:
 			target_ip = "46.101.127.20"
 			
-	var url = protocol + target_ip + ":" + port + "/ws"
+	var url = "wss://" + target_ip + ":" + port + "/ws"
 	print("Verbinde zu: ", url)
 	ws.connect_to_url(url)
 
