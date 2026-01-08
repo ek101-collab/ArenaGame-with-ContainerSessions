@@ -3,7 +3,7 @@ extends Node
 signal connected_to_server
 signal message_received(data)
 
-var MATCHMAKER_URL = "https://46.101.127.20.sslip.io/matchmaker"
+var MATCHMAKER_URL = "https://46.101.127.20.sslip.io:8001"
 var current_game_url = ""
 
 var ws := WebSocketPeer.new()
