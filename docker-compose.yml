@@ -2,12 +2,11 @@ version: '3.8'
 
 services:
   frontend:
-    image: nginx:alpine
+    build: 
+      context: .
+      dockerfile: Dockerfile_Godot
     ports:
       - "80:80"
-    volumes:
-      - ./GameExport:/usr/share/nginx/html:ro
-      - ./GameExport/nginx.conf:/etc/nginx/conf.d/default.conf:ro
 
   matchmaker:
     build: 
