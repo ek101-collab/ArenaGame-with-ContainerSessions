@@ -9,7 +9,7 @@ services:
       - "8001:8001"
     volumes:
       - ./GameExport:/usr/share/caddy
-      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./CaddyFile:/etc/caddy/Caddyfile
     restart: always
 
   matchmaker:
