@@ -1,3 +1,7 @@
+{
+    email deine-email@beispiel.de 
+}
+
 46.101.127.20.sslip.io {
     root * /usr/share/caddy
     file_server
