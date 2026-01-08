@@ -9,7 +9,7 @@ import os
 import sys
 import httpx
 
-app = FastAPI()
+
 SESSION_CODE = os.getenv("GAME_SESSION_CODE", "LOCAL")
 
 game_state = {
@@ -42,6 +42,7 @@ async def lifespan(app: FastAPI):
     yield
     
     timeout_task.cancel()
+    
 app = FastAPI(lifespan=lifespan)
 
 
