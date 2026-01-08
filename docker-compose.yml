@@ -2,11 +2,13 @@ version: '3.8'
 
 services:
   frontend:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile_Godot
     ports:
       - "80:80"
+      - "443:443"
+    restart: always
 
   matchmaker:
     build: 

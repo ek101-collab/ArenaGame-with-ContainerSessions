@@ -3,7 +3,7 @@ extends Node
 signal connected_to_server
 signal message_received(data)
 
-var MATCHMAKER_URL = "http://46.101.127.20:8001"
+var MATCHMAKER_URL = "https://46.101.127.20.sslip.io:8001"
 var ws_url = ""
 
 var ws := WebSocketPeer.new()
@@ -14,7 +14,7 @@ var session_code = ""
 
 func _ready():
 	if OS.has_feature("web"):
-		MATCHMAKER_URL = "http://46.101.127.20:8001"
+		MATCHMAKER_URL = "https://46.101.127.20.sslip.io:8001"
 		print("Browser-Modus: Matchmaker ist ", MATCHMAKER_URL)
 	else:
 		MATCHMAKER_URL = "http://127.0.0.1:8001"
