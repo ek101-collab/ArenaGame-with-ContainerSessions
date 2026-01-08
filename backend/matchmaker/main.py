@@ -39,12 +39,13 @@ async def create_session():
         container.reload()
 
         assigned_port = container.ports['8000/tcp'][0]['HostPort']
-        ip_address = f"127.0.0.1:{assigned_port}"
+        public_ip = "46.101.127.20" 
+        ip_address = f"{public_ip}:{assigned_port}"
         
         active_sessions[code] = {"id": container.id, "address": ip_address}
         print(f"Session {code} gestartet auf {ip_address}")
         
-        return {"code": code, "ip": "DYNAMIC_HOST", "port": assigned_port}
+        return {"code": code, "ip": public_ip, "port": assigned_port}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

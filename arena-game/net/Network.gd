@@ -3,7 +3,7 @@ extends Node
 signal connected_to_server
 signal message_received(data)
 
-var MATCHMAKER_URL = "http://127.0.0.1:8001"
+var MATCHMAKER_URL = "http://46.101.127.20:8001"
 var ws_url = ""
 
 var ws := WebSocketPeer.new()
@@ -14,10 +14,7 @@ var session_code = ""
 
 func _ready():
 	if OS.has_feature("web"):
-		var current_host = JavaScriptBridge.eval("window.location.hostname")
-		var current_protocol = JavaScriptBridge.eval("window.location.protocol")
-		
-		MATCHMAKER_URL = current_protocol + "//" + current_host + ":8001"
+		MATCHMAKER_URL = "http://46.101.127.20:8001"
 		print("Browser-Modus: Matchmaker ist ", MATCHMAKER_URL)
 	else:
 		MATCHMAKER_URL = "http://127.0.0.1:8001"
@@ -91,26 +88,17 @@ func _connect_ws(ip: String, port: String):
 	connected = false 
 	
 	var protocol = "ws://"
-	
-	if OS.has_feature("web"):
-		var current_protocol = JavaScriptBridge.eval("window.location.protocol")
-		
-		if current_protocol == "https:":
-			protocol = "wss://"
-		
 	var target_ip = ip
 	
-	if OS.has_feature("web"):
-		if ip == "DYNAMIC_HOST" or ip == "127.0.0.1" or ip == "localhost":
+	if target_ip == "" or target_ip == "127.0.0.1" or target_ip == "localhost" or target_ip == "DYNAMIC_HOST":
+		if OS.has_feature("web"):
 			target_ip = JavaScriptBridge.eval("window.location.hostname")
-			print("Web-Fix: Nutze Hostname ", target_ip, " statt ", ip)
-		
+		else:
+			target_ip = "46.101.127.20"
+			
 	var url = protocol + target_ip + ":" + port + "/ws"
-	print("Versuche WebSocket Verbindung zu: ", url)
-	
-	var error = ws.connect_to_url(url)
-	if error != OK:
-		print("Kritischer Fehler beim Starten der Verbindung: ", error)
+	print("Verbinde zu: ", url)
+	ws.connect_to_url(url)
 
 func disconnect_from_server():
 	ws.close()

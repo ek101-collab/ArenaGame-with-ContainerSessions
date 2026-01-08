@@ -20,7 +20,7 @@ game_state = {
 
 async def notify_matchmaker_done():
     if SESSION_CODE != "LOCAL":
-        url = f"http://matchmaker:8001/session_done/{SESSION_CODE}"
+        url = f"http://46.101.127.20:8001/session_done/{SESSION_CODE}"
         try:
             async with httpx.AsyncClient() as client:
                 await client.post(url)
