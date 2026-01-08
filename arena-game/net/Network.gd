@@ -87,7 +87,7 @@ func _connect_ws(ip: String, port: String):
 	ws = WebSocketPeer.new()
 	connected = false 
 	
-	var protocol = "ws://"
+	var protocol = "wss://"
 	var target_ip = ip
 	
 	if target_ip == "" or target_ip == "127.0.0.1" or target_ip == "localhost" or target_ip == "DYNAMIC_HOST":
