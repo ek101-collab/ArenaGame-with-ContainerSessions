@@ -41,7 +41,21 @@ async def create_session():
 )
         container.reload()
 
-        assigned_port = container.ports['8000/tcp'][0]['HostPort']
+        assigned_port = None
+        retries = 0
+        while retries < 15:
+            container.reload()
+            if container.status == "running" and container.ports and '8000/tcp' in container.ports:
+                assigned_port = container.ports['8000/tcp'][0]['HostPort']
+                break
+            
+            time.sleep(0.2)
+            retries += 1
+        
+        if not assigned_port:
+            container.stop()
+            raise HTTPException(status_code=500, detail="Container gestartet, aber Port-Mapping fehlgeschlagen")
+        
         public_ip = "46.101.127.20" 
         ip_address = f"{public_ip}:{assigned_port}"
         
