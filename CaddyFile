@@ -16,12 +16,5 @@
         @port path_regexp port ^/game/([0-9]+)
         uri strip_prefix /game/{re.port.1}
         reverse_proxy @port localhost:{re.port.1}
-
-        reverse_proxy localhost:{re.port.1} {
-            header_up Host {host}
-            header_up X-Real-IP {remote_host}
-            header_up Connection {>Connection}
-            header_up Upgrade {>Upgrade}
-        }
     }
 }
