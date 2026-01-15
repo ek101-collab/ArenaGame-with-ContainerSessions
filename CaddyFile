@@ -9,17 +9,12 @@
         Cross-Origin-Opener-Policy same-origin
         Cross-Origin-Embedder-Policy require-corp
     }
-}
-
-46.101.127.20.sslip.io:8001 {
-    reverse_proxy matchmaker:8001
-}
-
-handle_path /matchmaker/* {
+    handle_path /matchmaker/* {
         reverse_proxy matchmaker:8001
-}
+    }
 
-@game_sessions path_regexp game ^/session/([0-9]+)/ws
+    @game_sessions path_regexp game ^/session/([0-9]+)/ws
     handle @game_sessions {
         reverse_proxy host.docker.internal:{re.game.1}
+    }
 }
