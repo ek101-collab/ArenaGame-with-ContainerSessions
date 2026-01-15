@@ -44,7 +44,7 @@ async def create_session():
         container = client.containers.run(
             "mein-game-server",
             detach=True, 
-            ports={'8000/tcp': ('0.0.0.0', None)},
+            ports={'8000/tcp': ('127.0.0.1', None)},
             environment={"GAME_SESSION_CODE": code},
             auto_remove=True
         )

@@ -85,19 +85,15 @@ func request_session_ip(code: String):
 func _connect_ws(ip: String, port: String):
 	ws = WebSocketPeer.new()
 	connected = false 
+	var protocol = "wss://"
+	var domain = "46.101.127.20.sslip.io"
 	
-	var protocol = "ws://"
-	var target_ip = ip
-	
-	if target_ip == "" or target_ip == "127.0.0.1" or target_ip == "localhost" or target_ip == "DYNAMIC_HOST":
-		if OS.has_feature("web"):
-			target_ip = JavaScriptBridge.eval("window.location.hostname")
-		else:
-			target_ip = "46.101.127.20"
-			
-	var url = protocol + target_ip + ":" + port + "/ws"
+	var url = protocol + domain + "/session/" + port + "/ws"
 	print("Verbinde zu: ", url)
-	ws.connect_to_url(url)
+	
+	var err = ws.connect_to_url(url)
+	if err != OK:
+		print("Konnte Verbindung nicht initialisieren. Fehlercode: ", err)
 
 func disconnect_from_server():
 	ws.close()
