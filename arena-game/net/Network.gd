@@ -14,7 +14,7 @@ var session_code = ""
 
 func _ready():
 	if OS.has_feature("web"):
-		MATCHMAKER_URL = "https://46.101.127.20.sslip.io:8001"
+		MATCHMAKER_URL = "https://46.101.127.20.sslip.io/matchmaker"
 		print("Browser-Modus: Matchmaker ist ", MATCHMAKER_URL)
 	else:
 		MATCHMAKER_URL = "http://127.0.0.1:8001"
