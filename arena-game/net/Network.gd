@@ -62,7 +62,7 @@ func request_new_session():
 		var json = JSON.parse_string(response_text)
 		
 		if json and json.has("ip") and json.has("port"):
-			_connect_ws(json.ip, str(json.port))
+			_connect_ws(json.ip, int(json.port))
 		else:
 			print("Matchmaker Fehler: Ungültiges JSON erhalten")
 		http.queue_free()
@@ -75,14 +75,14 @@ func request_session_ip(code: String):
 	http.request_completed.connect(func(_result, _response_code, _headers, body):
 		var json = JSON.parse_string(body.get_string_from_utf8())
 		if json and json.has("ip") and json.has("port"):
-			_connect_ws(json.ip, str(json.port))
+			_connect_ws(json.ip, int(json.port))
 		else:
 			print("Session-Code nicht gefunden.")
 		http.queue_free()
 	)
 	http.request(MATCHMAKER_URL + "/join_session/" + code, [], HTTPClient.METHOD_GET)
 
-func _connect_ws(ip: String, port: String):
+func _connect_ws(ip: String, port: int):
 	ws = WebSocketPeer.new()
 	connected = false 
 	
@@ -95,7 +95,7 @@ func _connect_ws(ip: String, port: String):
 		else:
 			target_ip = "46.101.127.20"
 			
-	var url = protocol + target_ip + ":" + port + "/ws"
+	var url = protocol + target_ip + ":" + str(port) + "/ws"
 	print("Verbinde zu: ", url)
 	ws.connect_to_url(url)
 
