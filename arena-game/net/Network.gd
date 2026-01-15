@@ -62,7 +62,6 @@ func request_new_session():
 		var json = JSON.parse_string(response_text)
 		
 		if json and json.has("ip") and json.has("port"):
-			await get_tree().create_timer(5.0).timeout
 			_connect_ws(json.ip, str(json.port))
 		else:
 			print("Matchmaker Fehler: Ungültiges JSON erhalten")
