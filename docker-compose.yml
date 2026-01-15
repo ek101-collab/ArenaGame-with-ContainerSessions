@@ -4,8 +4,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - "8001:8001"
     volumes:
       - ./GameExport:/usr/share/caddy
       - ./CaddyFile:/etc/caddy/Caddyfile
@@ -22,7 +21,3 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: always
-
-volumes:
-  caddy_data:
-  caddy_config:
