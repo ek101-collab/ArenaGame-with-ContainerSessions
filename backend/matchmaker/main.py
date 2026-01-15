@@ -4,7 +4,6 @@ import socket
 import random
 import string
 import docker
-import asyncio
 
 app = FastAPI()
 
