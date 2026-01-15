@@ -65,7 +65,7 @@ async def create_session():
 
         server_ready = False
         for _ in range(25):
-            if is_port_open("172.17.0.1", assigned_port):
+            if is_port_open("46.101.127.20", assigned_port):
                 server_ready = True
                 break
             await asyncio.sleep(0.2)

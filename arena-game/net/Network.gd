@@ -3,7 +3,7 @@ extends Node
 signal connected_to_server
 signal message_received(data)
 
-var MATCHMAKER_URL = "https://46.101.127.20.sslip.io/matchmaker"
+var MATCHMAKER_URL = "https://46.101.127.20.sslip.io:8001"
 var ws_url = ""
 
 var ws := WebSocketPeer.new()
@@ -86,10 +86,16 @@ func _connect_ws(ip: String, port: int):
 	ws = WebSocketPeer.new()
 	connected = false 
 	
-	var protocol = "wss://"
-	var domain = "46.101.127.20.sslip.io"
+	var protocol = "ws://"
+	var target_ip = ip
 	
-	var url = protocol + domain + "/session/" + str(port) + "/ws"
+	if target_ip == "" or target_ip == "127.0.0.1" or target_ip == "localhost" or target_ip == "DYNAMIC_HOST":
+		if OS.has_feature("web"):
+			target_ip = JavaScriptBridge.eval("window.location.hostname")
+		else:
+			target_ip = "46.101.127.20"
+			
+	var url = protocol + target_ip + ":" + str(port) + "/ws"
 	print("Verbinde zu: ", url)
 	ws.connect_to_url(url)
 
