@@ -10,3 +10,10 @@
         Cross-Origin-Embedder-Policy require-corp
     }
 }
+
+matchmaker.46.101.127.20.sslip.io {
+    reverse_proxy matchmaker:8001
+}
+
+*.game.46.101.127.20.sslip.io {
+}
