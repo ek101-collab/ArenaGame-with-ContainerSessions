@@ -18,6 +18,8 @@ services:
       dockerfile: Dockerfile_matchmaker
     networks:
       - caddy_net
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     restart: always
 
 networks:
