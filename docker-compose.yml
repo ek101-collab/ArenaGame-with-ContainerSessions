@@ -7,7 +7,6 @@ services:
     volumes:
       - ./GameExport:/usr/share/caddy
       - ./CaddyFile:/etc/caddy/Caddyfile
-      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - caddy_net
     restart: always
@@ -18,6 +17,8 @@ services:
       dockerfile: Dockerfile_matchmaker
     networks:
       - caddy_net
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     restart: always
 
 networks:
