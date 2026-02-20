@@ -3,7 +3,7 @@ extends Node
 signal connected_to_server
 signal message_received(data)
 
-var MATCHMAKER_URL = "https://matchmaker.46.101.127.20.sslip.io"
+var MATCHMAKER_URL = "https://46.101.127.20.sslip.io:8001"
 var ws_url = ""
 
 var ws := WebSocketPeer.new()
@@ -14,15 +14,13 @@ var session_code = ""
 
 func _ready():
 	if OS.has_feature("web"):
-		MATCHMAKER_URL = "https://matchmaker.46.101.127.20.sslip.io"
+		MATCHMAKER_URL = "https://46.101.127.20.sslip.io:8001"
 		print("Browser-Modus: Matchmaker ist ", MATCHMAKER_URL)
 	else:
 		MATCHMAKER_URL = "http://127.0.0.1:8001"
 		print("Editor-Modus: Matchmaker ist ", MATCHMAKER_URL)
 
 func _process(_delta):
-	if ws == null:
-		return
 	ws.poll()
 	var state = ws.get_ready_state()
 
@@ -63,10 +61,10 @@ func request_new_session():
 		print("MATCHMAKER ANTWORT: ", response_text)
 		var json = JSON.parse_string(response_text)
 		
-		if json and json.has("host"):
-			_connect_ws(json.host)
+		if json and json.has("ip") and json.has("port"):
+			_connect_ws(json.ip, int(json.port))
 		else:
-			print("Matchmaker Fehler")
+			print("Matchmaker Fehler: Ungültiges JSON erhalten")
 		http.queue_free()
 	)
 	http.request(MATCHMAKER_URL + "/create_session", [], HTTPClient.METHOD_POST)
@@ -76,21 +74,28 @@ func request_session_ip(code: String):
 	add_child(http)
 	http.request_completed.connect(func(_result, _response_code, _headers, body):
 		var json = JSON.parse_string(body.get_string_from_utf8())
-		if json and json.has("host"):
-			_connect_ws(json.host)
+		if json and json.has("ip") and json.has("port"):
+			_connect_ws(json.ip, int(json.port))
 		else:
 			print("Session-Code nicht gefunden.")
 		http.queue_free()
 	)
 	http.request(MATCHMAKER_URL + "/join_session/" + code, [], HTTPClient.METHOD_GET)
 
-func _connect_ws(host: String):
+func _connect_ws(ip: String, port: int):
 	ws = WebSocketPeer.new()
-	connected = false
-
-	var protocol = "wss://" if OS.has_feature("web") else "ws://"
-	var url = protocol + host + "/ws"
-
+	connected = false 
+	
+	var protocol = "ws://"
+	var target_ip = ip
+	
+	if target_ip == "" or target_ip == "127.0.0.1" or target_ip == "localhost" or target_ip == "DYNAMIC_HOST":
+		if OS.has_feature("web"):
+			target_ip = JavaScriptBridge.eval("window.location.hostname")
+		else:
+			target_ip = "46.101.127.20"
+			
+	var url = protocol + target_ip + ":" + str(port) + "/ws"
 	print("Verbinde zu: ", url)
 	ws.connect_to_url(url)
 

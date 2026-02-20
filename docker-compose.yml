@@ -4,19 +4,20 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "8001:8001"
     volumes:
       - ./GameExport:/usr/share/caddy
-      - ./Caddyfile:/etc/caddy/Caddyfile
-    networks:
-      - caddy_net
+      - ./CaddyFile:/etc/caddy/Caddyfile
     restart: always
 
   matchmaker:
-    build: ./backend/matchmaker
-    networks:
-      - caddy_net
+    build: 
+      context: ./backend/matchmaker
+      dockerfile: Dockerfile_matchmaker
+    expose:
+      - "8001"
+    environment:
+      - SERVER_IP=46.101.127.20
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     restart: always
-
-networks:
-  caddy_net:
-    driver: bridge

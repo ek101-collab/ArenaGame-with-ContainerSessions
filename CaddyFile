@@ -1,5 +1,5 @@
 {
-    email deine-email@beispiel.de
+    email deine-email@beispiel.de 
 }
 
 46.101.127.20.sslip.io {
@@ -11,6 +11,6 @@
     }
 }
 
-*.game.46.101.127.20.sslip.io {
-    reverse_proxy @game_containers
+46.101.127.20.sslip.io:8001 {
+    reverse_proxy matchmaker:8001
 }
