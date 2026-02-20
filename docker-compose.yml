@@ -1,3 +1,4 @@
+version: "3.9"
 services:
   frontend:
     image: caddy:alpine
@@ -6,15 +7,19 @@ services:
       - "443:443"
     volumes:
       - ./GameExport:/usr/share/caddy
-      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./CaddyFile:/etc/caddy/Caddyfile
     networks:
       - caddy_net
     restart: always
 
   matchmaker:
-    build: ./backend/matchmaker
+    build: 
+      context: ./backend/matchmaker
+      dockerfile: Dockerfile_matchmaker
     networks:
       - caddy_net
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     restart: always
 
 networks:
