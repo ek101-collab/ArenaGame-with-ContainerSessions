@@ -9,7 +9,7 @@ services:
       - "host.docker.internal:host-gateway"
     volumes:
       - ./GameExport:/usr/share/caddy
-      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./CaddyFile:/etc/caddy/Caddyfile
     restart: always
 
   matchmaker:
