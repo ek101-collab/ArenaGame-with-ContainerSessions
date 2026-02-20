@@ -86,18 +86,18 @@ func _connect_ws(ip: String, port: int):
 	ws = WebSocketPeer.new()
 	connected = false 
 	
-	var protocol = "ws://"
-	var target_ip = ip
+	var domain = "46.101.127.20.sslip.io"
+	var url = ""
 	
-	if target_ip == "" or target_ip == "127.0.0.1" or target_ip == "localhost" or target_ip == "DYNAMIC_HOST":
-		if OS.has_feature("web"):
-			target_ip = JavaScriptBridge.eval("window.location.hostname")
-		else:
-			target_ip = "46.101.127.20"
+	if OS.has_feature("web"):
+		url = "wss://" + domain + "/game/" + str(port) + "/ws"
+	else:
+		url = "ws://" + ip + ":" + str(port) + "/ws"
 			
-	var url = protocol + target_ip + ":" + str(port) + "/ws"
-	print("Verbinde zu: ", url)
-	ws.connect_to_url(url)
+	print("Verbinde sicher zu: ", url)
+	var err = ws.connect_to_url(url)
+	if err != OK:
+		print("Fehler beim Verbindungsaufbau: ", err)
 
 func disconnect_from_server():
 	ws.close()
