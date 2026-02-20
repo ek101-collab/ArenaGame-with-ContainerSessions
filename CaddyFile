@@ -13,10 +13,22 @@
 
 matchmaker.46.101.127.20.sslip.io {
     reverse_proxy matchmaker:8001
+    header {
+        Access-Control-Allow-Origin *
+        Access-Control-Allow-Methods GET,POST,OPTIONS
+        Access-Control-Allow-Headers *
+    }
 }
 
 *.game.46.101.127.20.sslip.io {
-    reverse_proxy {
-        to {label.caddy.reverse_proxy}
+    reverse_proxy 127.0.0.1:8000 {
+        transport http {
+            versions h2c 1.1
+        }
+    }
+    header {
+        Access-Control-Allow-Origin *
+        Access-Control-Allow-Methods GET,POST,OPTIONS
+        Access-Control-Allow-Headers *
     }
 }
