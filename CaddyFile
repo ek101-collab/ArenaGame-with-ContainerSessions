@@ -10,7 +10,3 @@
         Cross-Origin-Embedder-Policy require-corp
     }
 }
-
-*.game.46.101.127.20.sslip.io {
-    reverse_proxy @game_containers
-}
