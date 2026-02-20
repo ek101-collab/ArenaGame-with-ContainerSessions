@@ -5,18 +5,18 @@
 46.101.127.20.sslip.io {
     root * /usr/share/caddy
     file_server
-    
-    header {
-        Cross-Origin-Opener-Policy same-origin
-        Cross-Origin-Embedder-Policy require-corp
-    }
 
     @game_ws {
-        path_regexp game ^/game/(\[0-9\]+)/ws
+        path_regexp game ^/game/([0-9]+)/ws$
     }
     
     handle @game_ws {
-        reverse_proxy 46.101.127.20:{re.game.1}
+        reverse_proxy host.docker.internal:{re.game.1}
+    }
+
+    header {
+        Cross-Origin-Opener-Policy same-origin
+        Cross-Origin-Embedder-Policy require-corp
     }
 }
 

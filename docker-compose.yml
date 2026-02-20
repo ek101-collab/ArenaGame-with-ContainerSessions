@@ -5,9 +5,11 @@ services:
       - "80:80"
       - "443:443"
       - "8001:8001"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - ./GameExport:/usr/share/caddy
-      - ./CaddyFile:/etc/caddy/Caddyfile
+      - ./Caddyfile:/etc/caddy/Caddyfile
     restart: always
 
   matchmaker:
