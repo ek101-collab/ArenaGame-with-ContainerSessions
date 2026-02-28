@@ -1,0 +1,43 @@
+name: ArenaGame CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ] # Die Pipeline startet, sobald du "git push" machst
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v3
+
+      - name: Python einrichten
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Test-Tools installieren
+        run: |
+          pip install pytest httpx fastapi docker uvicorn
+
+      - name: Tests ausführen
+        run: |
+          # Setzt den Pfad, damit Python deine Module im 'backend' Ordner findet
+          export PYTHONPATH=$PYTHONPATH:$(pwd)/backend
+          python -m pytest backend/tests/
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deployment via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: 46.101.127.20
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /root/ArenaGame-with-ContainerSessions
+            git pull origin main
+            docker-compose up -d --build
+            docker image prune -f
