@@ -2,8 +2,7 @@ name: ArenaGame CI/CD Pipeline
 
 on:
   push:
-    branches: [ main ] # Die Pipeline startet, sobald du "git push" machst
-
+    branches: [ main ]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -22,7 +21,6 @@ jobs:
 
       - name: Tests ausführen
         run: |
-          # Setzt den Pfad, damit Python deine Module im 'backend' Ordner findet
           export PYTHONPATH=$PYTHONPATH:$(pwd)/backend
           python -m pytest backend/tests/
 
